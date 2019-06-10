@@ -1,0 +1,5 @@
+#!/bin/bash
+main="jgrader.jGrader"
+classpath="./classes"
+echo "Running $main"
+java -cp "$classpath" $main "$@"
