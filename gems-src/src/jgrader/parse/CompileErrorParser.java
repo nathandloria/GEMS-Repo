@@ -33,16 +33,17 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
     int eLineNum = 0;
     int count = 0;
 		//simple print for now
+		System.out.println("----------------------------------------------------");
 		System.out.println("Code: " + diag.getCode());
 		System.out.println("Kind: " + diag.getKind());
 		System.out.println("Position: " + diag.getPosition());
 		System.out.println("Start Position: " + diag.getStartPosition());
 		System.out.println("End Position: " + diag.getEndPosition());
 		System.out.println("Source: " + diag.getSource());
-		System.out.println("Message " + diag.getMessage(null));
+		System.out.println("Message: " + diag.getMessage(null));
     try {
-      File ogerrorFile = new File("/home/lorian/Desktop/gems/gems-src/src/jgrader/errors/ogerrors.txt");
-      File eerrorFile = new File("/home/lorian/Desktop/gems/gems-src/src/jgrader/errors/enhancederrors.txt");
+      File ogerrorFile = new File("/home/lorian/Desktop/GEMS/GEMS-Repo/gems-src/src/jgrader/errors/ogerrors.txt");
+      File eerrorFile = new File("/home/lorian/Desktop/GEMS/GEMS-Repo/gems-src/src/jgrader/errors/enhancederrors.txt");
       FileReader ogerror = new FileReader(ogerrorFile);
       FileReader eerror = new FileReader(eerrorFile);
       Scanner ogerrorScan = new Scanner(ogerrorFile);
@@ -75,7 +76,8 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
     } catch (Exception x) {
       System.out.println(x);
     }
-
+		System.out.println("----------------------------------------------------");
+		System.out.println();
 		//do parsing
 		CompileErrorParseObject error = new CompileErrorParseObject("", "", diag.getMessage(null));
 

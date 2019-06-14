@@ -1,3 +1,4 @@
 There seems to be a ';' missing at the end of your line of code. Check the specified line to ensure that there is a ';' to complete the line.
 There seems to be a ')' missing at the end of a statement. Check the specified line to ensure that each '(' has it's respective ')' to complete the pair.
-test
+There seems to be a '{' missing at the beginning of a class declaration or a loop/conditional statement. Ensure that each loop, logic, or conditional statement has a '{' right after the '()' or class declaration segment. Don't forget the matching '}' at the end!
+The compiler found an error in your code when attempting to locate a class for a '}' perhaps you added one too many '}' at the end of your code. Check the specified line to ensure that all '{' have a corresponding '}' to complete the pair.

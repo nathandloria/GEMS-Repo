@@ -1,3 +1,4 @@
 ';' expected
 ')' expected
-test
+'{' expected
+class, interface, or enum expected
