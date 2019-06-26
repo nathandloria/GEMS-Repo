@@ -2,3 +2,6 @@
 ')' expected
 '{' expected
 class, interface, or enum expected
+reached end of file while parsing
+unclosed string literal
+illegal start of expression
