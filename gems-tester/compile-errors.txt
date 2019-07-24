@@ -1,5 +1,3 @@
-: class, interface, or enum expected
+: ';' expected
 -----
-: class, interface, or enum expected
------
-: class, interface, or enum expected
+: ')' expected
