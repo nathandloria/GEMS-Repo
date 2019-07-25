@@ -1,3 +1,1 @@
-: ';' expected
------
-: ')' expected
+jgrader.parse.objects.CompileErrorParseObject@573f2bb1

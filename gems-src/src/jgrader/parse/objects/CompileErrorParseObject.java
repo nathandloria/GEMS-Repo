@@ -1,18 +1,43 @@
 package jgrader.parse.objects;
 
 public class CompileErrorParseObject {
-    String error;
     String original;
-    String shortDescription;
+    int numErrors;
+    String code;
+    String kind;
+    double startPos;
+    double endPos;
+    String source;
+    String enhanced;
 
-    public CompileErrorParseObject(String error, String original, String shortDescription) {
-        this.error = error;
-        this.original = original;
-        this.shortDescription = shortDescription;
+    public CompileErrorParseObject(String original, int numErrors, String code, String kind, double startPos, double endPos, String source) {
+      this.original = original;
+      this.numErrors = numErrors;
+      this.code = code;
+      this.kind = kind;
+      this.startPos = startPos;
+      this.endPos = endPos;
+      this.source = source;
     }
 
-    public String toString() {
-        if(error == null) return original;
-        else return error + ": " + shortDescription;
+    public void setEnhanced(String enhanced) {
+      this.enhanced = enhanced;
+    }
+
+    public void printSuggestion() {
+      if (numErrors == 0) {
+        System.out.println("\nError #" + (numErrors + 1));
+      } else {
+        System.out.println("Error #" + (numErrors + 1));
+      }
+      System.out.println("----------------------------------------------------");
+      System.out.println("Code: " + code);
+      System.out.println("Kind: " + kind);
+      System.out.println("Start Position: " + startPos);
+      System.out.println("End Position: " + endPos);
+      System.out.println("Source: " + source);
+      System.out.println("Original Error Message: " + original);
+      System.out.println("Suggestion: " + enhanced);
+      System.out.println("----------------------------------------------------\n");
     }
 }
