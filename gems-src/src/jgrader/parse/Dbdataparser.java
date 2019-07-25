@@ -13,10 +13,8 @@ public class Dbdataparser {
     try {
       Class.forName("com.mysql.jdbc.Driver");
       Connection con = DriverManager.getConnection (
-      "jdbc:mysql://gems-db-instance-1-rds.cxg9j6dtitgh.us-east-2.rds.amazonaws.com:3306/errors","admin","gemsTest123"
+        "jdbc:mysql://gems-db-instance-1-rds.cxg9j6dtitgh.us-east-2.rds.amazonaws.com:3306/errors","admin","gemsTest123"
       );
-      //here sonoo is database name, root is username and password
-      System.out.println(con);
       Statement stmt = con.createStatement();
       ResultSet rs;
       int count = 0;

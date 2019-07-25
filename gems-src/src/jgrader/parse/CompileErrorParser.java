@@ -37,36 +37,12 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 		CompileErrorParseObject message = new CompileErrorParseObject(diag.getMessage(null),
 		numErrors, diag.getCode(), diag.getKind().toString(),
 		diag.getStartPosition(), diag.getEndPosition(), diag.getSource().toString());
-		String[] ogErrorStrings;
-		String[] eErrorStrings;
-		int ogLineNum = 0;
-		int eLineNum = 0;
-		int count = 0;
-		String dir = System.getProperty("user.dir");
-		//simple print for now
+		Dbdataparser data = new Dbdataparser();
+		data.setStringArrays();
+		String[] ogErrorStrings = data.getOgErrorArr();
+		String[] eErrorStrings = data.getEnhErrorArr();
 		try {
-			File ogerrorFile = new File(dir + "/src/jgrader/errors/ogerrors.txt");
-			File eerrorFile = new File(dir + "/src/jgrader/errors/enhancederrors.txt");
-			FileReader ogerror = new FileReader(ogerrorFile);
-			FileReader eerror = new FileReader(eerrorFile);
-			Scanner ogerrorScan = new Scanner(ogerrorFile);
-			Scanner eerrorScan = new Scanner(eerrorFile);
-			LineNumberReader ogLineCounter = new LineNumberReader(ogerror);
-			LineNumberReader eLineCounter = new LineNumberReader(eerror);
-			while (ogLineCounter.readLine() != null) {
-				ogLineNum++;
-			}
-			while (eLineCounter.readLine() != null) {
-				eLineNum++;
-			}
-			ogErrorStrings = new String[ogLineNum];
-			eErrorStrings = new String[eLineNum];
-			if (ogLineNum == eLineNum) {
-				while (ogerrorScan.hasNextLine()) {
-					ogErrorStrings[count] = ogerrorScan.nextLine();
-					eErrorStrings[count] = eerrorScan.nextLine();
-					count++;
-				}
+			if (ogErrorStrings.length == eErrorStrings.length) {
 				for (int i = 0; i < ogErrorStrings.length; i++) {
 					if (diag.getMessage(null).equals(ogErrorStrings[i])) {
 						message.setEnhanced(eErrorStrings[i]);
