@@ -47,6 +47,18 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 					if (diag.getMessage(null).equals(ogErrorStrings[i])) {
 						message.setEnhanced(eErrorStrings[i]);
 						message.printSuggestion();
+					} else if (diag.getMessage(null).contains("non-static variable") && ogErrorStrings[i].contains("non-static variable")) {
+						message.setEnhanced(eErrorStrings[i]);
+						message.printSuggestion();
+					} else if (diag.getMessage(null).contains("non-static method") && ogErrorStrings[i].contains("non-static method")) {
+						message.setEnhanced(eErrorStrings[i]);
+						message.printSuggestion();
+					} else if (diag.getMessage(null).contains("should be declared in a file named") && ogErrorStrings[i].contains("should be declared in a file named")) {
+						message.setEnhanced(eErrorStrings[i]);
+						message.printSuggestion();
+					} else if (diag.getMessage(null).contains("cannot be applied to given types") && ogErrorStrings[i].contains("cannot be applied to given types")) {
+						message.setEnhanced(eErrorStrings[i]);
+						message.printSuggestion();
 					}
 				}
 			} else {

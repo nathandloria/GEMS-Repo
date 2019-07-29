@@ -1,6 +1,17 @@
-public class MyTest {
-  public static void main(String[] args) {
-    System.out.println("hey")
-    System.out.println("Hello World!";
-  }
+class Singer
+{
+ static String name;
+ String album;
+
+ public void Singer(){
+  name="Whitney Houson";
+  album="Latest Releases";
+ }
+
+ public static void main(String[] args)
+ {
+  System.out.println("Name of the singer is "+name);
+  System.out.println("Album Information stored for "+album);
+
+ }
 }
