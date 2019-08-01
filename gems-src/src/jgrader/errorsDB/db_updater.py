@@ -36,6 +36,8 @@ with open(filepath) as fp:
         ogcnt += 1
 v = 0
 cursor = conn.cursor()
+
+
 cursor.execute("USE innodb")
 yn = input("Would you like to delete the current data from the database? (y/n): ")
 if yn == "y":
