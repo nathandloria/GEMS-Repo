@@ -13,19 +13,19 @@ public class Dbdataparser {
     try {
       Class.forName("com.mysql.jdbc.Driver");
       Connection con = DriverManager.getConnection (
-        "jdbc:mysql://gems-db-instance-1-rds.cxg9j6dtitgh.us-east-2.rds.amazonaws.com:3306/errors","admin","gemsTest123"
+        "jdbc:mysql://gemserrors.cxg9j6dtitgh.us-east-2.rds.amazonaws.com:3306/innodb", "gems_user", "9daR1DjdQbSwo19HCMqj"
       );
       Statement stmt = con.createStatement();
       ResultSet rs;
       int count = 0;
-      rs = stmt.executeQuery("SELECT * FROM eMessages");
+      rs = stmt.executeQuery("SELECT * FROM gems_error_messages");
       while (rs.next()) {
         count++;
       }
       int i = 0;
       ogerrors = new String[count];
       eerrors = new String[count];
-      rs = stmt.executeQuery("SELECT * FROM eMessages");
+      rs = stmt.executeQuery("SELECT * FROM gems_error_messages");
       while (rs.next()) {
         ogerrors[i] = rs.getString("ogerrors");
         eerrors[i] = rs.getString("eerrors");

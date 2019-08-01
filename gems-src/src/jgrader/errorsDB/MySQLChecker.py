@@ -1,21 +1,15 @@
 import mysql.connector as mc
 
-host = "gems-db.cluster-ro-cxg9j6dtitgh.us-east-2.rds.amazonaws.com"
-port = 3306
-dbname = "database-1-instance-1-rds"
-user = "admin"
-password = "gemsTest123"
-
 conn = mc.connect(
-    host = "gems-db-instance-1.cxg9j6dtitgh.us-east-2.rds.amazonaws.com",
+    host = "gemserrors.cxg9j6dtitgh.us-east-2.rds.amazonaws.com",
     port = 3306,
-    user = "admin",
-    passwd = "gemsTest123"
+    user = "gems_user",
+    passwd = "9daR1DjdQbSwo19HCMqj"
 )
 
 cursor = conn.cursor()
-cursor.execute("USE errors")
-cursor.execute("SELECT * FROM eMessages")
+cursor.execute("USE innodb")
+cursor.execute("SELECT * FROM gems_error_messages")
 
 for x in cursor:
     print("=================================================================")

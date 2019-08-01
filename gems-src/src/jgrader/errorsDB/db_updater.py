@@ -1,17 +1,11 @@
 import mysql.connector as mc
 import sys
 
-host = "gems-db.cluster-ro-cxg9j6dtitgh.us-east-2.rds.amazonaws.com"
-port = 3306
-dbname = "database-1-instance-1-rds"
-user = "admin"
-password = "gemsTest123"
-
 conn = mc.connect(
-    host = "gems-db-instance-1.cxg9j6dtitgh.us-east-2.rds.amazonaws.com",
+    host = "gemserrors.cxg9j6dtitgh.us-east-2.rds.amazonaws.com",
     port = 3306,
-    user = "admin",
-    passwd = "gemsTest123"
+    user = "gems_user",
+    passwd = "9daR1DjdQbSwo19HCMqj"
 )
 
 ogerrorsarr = []
@@ -42,17 +36,17 @@ with open(filepath) as fp:
         ogcnt += 1
 v = 0
 cursor = conn.cursor()
-cursor.execute("USE errors")
+cursor.execute("USE innodb")
 yn = input("Would you like to delete the current data from the database? (y/n): ")
 if yn == "y":
-    cursor.execute("DELETE FROM eMessages")
+    cursor.execute("DELETE FROM gems_error_messages")
 if ogcnt == ecnt:
     while v < ogcnt:
         data = {
             'ogError': ogerrorsarr[v],
             'eError': eerrorsarr[v]
         }
-        cursor.execute('''INSERT INTO eMessages (ogErrors, eErrors) VALUES (%(ogError)s, %(eError)s)''', data)
+        cursor.execute('''INSERT INTO gems_error_messages (ogerrors, eerrors) VALUES (%(ogError)s, %(eError)s)''', data)
         v += 1
 else:
     sys.exit("Error with input files! Files are not the same lenth!")
