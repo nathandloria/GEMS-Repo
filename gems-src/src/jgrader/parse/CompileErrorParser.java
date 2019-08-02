@@ -62,7 +62,7 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 					}
 				}
 			} else {
-				System.out.println("There was a problem with the error message files. Sorry!");
+				System.out.println("There was a problem with the error message data. Sorry!");
 				System.exit(0);
 			}
 		} catch (Exception x) {

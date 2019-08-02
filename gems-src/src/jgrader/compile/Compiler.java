@@ -43,7 +43,11 @@ public class Compiler extends SystemInteractor {
         // .collect(Collectors.toList());
         // System.out.println("CLASSES: " + classes);
         classes = null;
-        List<String> options = Arrays.asList("-d", projectDirectory + "/classes");
+
+        List<String> options = Arrays.asList("-d", projectDirectory);
+        if (Files.exists(Paths.get(projectDirectory + "/classes")) == true) {
+          options = Arrays.asList("-d", projectDirectory + "/classes");
+        }
 
         CompilationTask task = compiler.getTask(null, null, diagnostics, options, classes, compilationUnits);
 
