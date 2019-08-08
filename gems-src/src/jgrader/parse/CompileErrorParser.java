@@ -1,27 +1,24 @@
 package jgrader.parse;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.io.LineNumberReader;
-import java.util.Scanner;
-import jgrader.parse.objects.CompileErrorParseObject;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
+
+import jgrader.parse.objects.CompileErrorParseObject;
 
 public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObject>, CompileErrorParseObject> {
 
 	int numErrors;
+	ArrayList<String> messageArrs;
 
 	public CompileErrorParser() {
 		numErrors = 0;
+		messageArrs = new ArrayList<>();
+	}
+
+	public int getErrorNum() {
+		return numErrors;
 	}
 
 	public String complete() {
@@ -45,20 +42,35 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 			if (ogErrorStrings.length == eErrorStrings.length) {
 				for (int i = 0; i < ogErrorStrings.length; i++) {
 					if (diag.getMessage(null).equals(ogErrorStrings[i])) {
-						message.setEnhanced(eErrorStrings[i]);
-						message.printSuggestion();
+						setMessageArr("\nError #" + (numErrors + 1) + ":" + "\n===============================================================================\nStart Pos: "
+				                + diag.getStartPosition() + "\n-------------------------------------------------------------------------------\nEnd Pos: "
+				                + diag.getEndPosition() + "\n-------------------------------------------------------------------------------\nOriginal Message: "
+				                + diag.getMessage(null) + "\n-------------------------------------------------------------------------------\nSuggestion: "
+				                + eErrorStrings[i] + "\n===============================================================================");
 					} else if (diag.getMessage(null).contains("non-static variable") && ogErrorStrings[i].contains("non-static variable")) {
-						message.setEnhanced(eErrorStrings[i]);
-						message.printSuggestion();
+						setMessageArr("\nError #" + (numErrors + 1) + ":" + "\n===============================================================================\nStart Pos: "
+				                + diag.getStartPosition() + "\n-------------------------------------------------------------------------------\nEnd Pos: "
+				                + diag.getEndPosition() + "\n-------------------------------------------------------------------------------\nOriginal Message: "
+				                + diag.getMessage(null) + "\n----------------------------------------------------------------------------------\nSuggestion: "
+				                + eErrorStrings[i] + "\n===============================================================================");
 					} else if (diag.getMessage(null).contains("non-static method") && ogErrorStrings[i].contains("non-static method")) {
-						message.setEnhanced(eErrorStrings[i]);
-						message.printSuggestion();
+						setMessageArr("\nError #" + (numErrors + 1) + ":" + "\n===============================================================================\nStart Pos: "
+				                + diag.getStartPosition() + "\n-------------------------------------------------------------------------------\nEnd Pos: "
+				                + diag.getEndPosition() + "\n-------------------------------------------------------------------------------\nOriginal Message: "
+				                + diag.getMessage(null) + "\n-------------------------------------------------------------------------------\nSuggestion: "
+				                + eErrorStrings[i] + "\n===============================================================================");
 					} else if (diag.getMessage(null).contains("should be declared in a file named") && ogErrorStrings[i].contains("should be declared in a file named")) {
-						message.setEnhanced(eErrorStrings[i]);
-						message.printSuggestion();
+						setMessageArr("\nError #" + (numErrors + 1) + ":" + "\n===============================================================================\nStart Pos: "
+				                + diag.getStartPosition() + "\n-------------------------------------------------------------------------------\nEnd Pos: "
+				                + diag.getEndPosition() + "\n-------------------------------------------------------------------------------\nOriginal Message: "
+				                + diag.getMessage(null) + "\n-------------------------------------------------------------------------------\nSuggestion: "
+				                + eErrorStrings[i] + "\n===============================================================================");
 					} else if (diag.getMessage(null).contains("cannot be applied to given types") && ogErrorStrings[i].contains("cannot be applied to given types")) {
-						message.setEnhanced(eErrorStrings[i]);
-						message.printSuggestion();
+						setMessageArr("\nError #" + (numErrors + 1) + ":" + "\n===============================================================================\nStart Pos: "
+				                + diag.getStartPosition() + "\n-------------------------------------------------------------------------------\nEnd Pos: "
+				                + diag.getEndPosition() + "\n-------------------------------------------------------------------------------\nOriginal Message: "
+				                + diag.getMessage(null) + "\n-------------------------------------------------------------------------------\nSuggestion: "
+				                + eErrorStrings[i] + "\n===============================================================================");
 					}
 				}
 			} else {
@@ -70,5 +82,13 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 		}
 		numErrors++;
 		return message;
+	}
+
+	public void setMessageArr(String str) {
+		messageArrs.add(str);
+	}
+
+	public ArrayList<String> getMessageArr() {
+		return messageArrs;
 	}
 }
