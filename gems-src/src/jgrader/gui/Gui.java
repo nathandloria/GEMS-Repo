@@ -73,7 +73,7 @@ public class Gui {
     f.setLocationRelativeTo(null);
     f.setVisible(true);
   }
-
+  
   public void setAgain() {
 	  buttonOne.setText("Select Directory");
 	  buttonOne.setVisible(true);
@@ -116,7 +116,7 @@ public class Gui {
     }
     return redo;
   }
-
+  
   public void resizeFrame() {
 	  f.removeAll();
 	  buttonTwo.setText("Check More Files");
