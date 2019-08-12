@@ -119,7 +119,7 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 		i = searchBinary(ogerr, comperr);
 		return i;
 	}
-	
+
 	public static void setMessageArr(String str) {
 		messageArrs.add(str);
 	}

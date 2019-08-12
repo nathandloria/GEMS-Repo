@@ -40,7 +40,7 @@ public class Compiler extends SystemInteractor {
         // Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromStrings(classes);
 
         List<JavaFileObject> compilationUnits = classes.stream().map(filename -> FileFinder.toRealPath(filename))
-                .map(filename -> new JavaSourceFile(filename)).collect(Collectors.toList());
+                .map(filename -> new JavaSourceFile(filename.replace(" ", "%20"))).collect(Collectors.toList());
 
         // classes = classes.stream().map(str -> Paths.get(str).toFile().getName().replaceAll(".java", ""))
         // .collect(Collectors.toList());
