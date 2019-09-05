@@ -57,7 +57,7 @@ public class Gui {
 
     textArea.setBackground(Color.BLACK);
     textArea.setForeground(Color.LIGHT_GRAY);
-    textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
+    textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 13));
     textArea.setEditable(false);
     textArea.setLineWrap(true);
 

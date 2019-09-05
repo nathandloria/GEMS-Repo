@@ -6,6 +6,7 @@ import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
 
 import jgrader.parse.objects.CompileErrorParseObject;
+import jgrader.updatedb.updater;
 
 public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObject>, CompileErrorParseObject> {
 
@@ -19,9 +20,11 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 	private static ArrayList<String> messageArrs;
 	private String[] eErrorStrings;
 	private String[] ogErrorStrings;
+	private updater upd;
 	private Dbdataparser data;
 
 	public CompileErrorParser() {
+		upd = new updater();
 		numErrors = 0;
 		messageArrs = new ArrayList<>();
 		data = new Dbdataparser();
@@ -65,47 +68,50 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 		message = new CompileErrorParseObject(diag.getMessage(null),
 		numErrors, diag.getCode(), diag.getKind().toString(),
 		diag.getStartPosition(), diag.getEndPosition(), diag.getSource().toString());
-
+		
+		upd.update(diag.getMessage(null));
 		index = setIndex(ogErrorStrings, diag.getMessage(null));
 
+		
+		
 		if (index == -1) {
 			return message;
 		} else {
 			if (diag.getMessage(null).equals(ogErrorStrings[index])) {
-				setMessageArr("\nError #" + (numErrors + 1) + ":" + "\n===============================================================================\nStart Pos: "
-				+ diag.getStartPosition() + "\n-------------------------------------------------------------------------------\nEnd Pos: "
-				+ diag.getEndPosition() + "\n-------------------------------------------------------------------------------\nSource: "
-				+ diag.getSource().toString() + "\n-------------------------------------------------------------------------------\nOriginal Message: "
-				+ diag.getMessage(null) + "\n-------------------------------------------------------------------------------\nSuggestion: "
-				+ eErrorStrings[index] + "\n===============================================================================");
+				setMessageArr("\nError #" + (numErrors + 1) + ":" + "\n==============================================================================\nStart Pos: "
+				+ diag.getStartPosition() + "\n------------------------------------------------------------------------------\nEnd Pos: "
+				+ diag.getEndPosition() + "\n------------------------------------------------------------------------------\nSource: "
+				+ diag.getSource().toString() + "\n------------------------------------------------------------------------------\nOriginal Message: "
+				+ diag.getMessage(null) + "\n------------------------------------------------------------------------------\nSuggestion: "
+				+ eErrorStrings[index] + "\n==============================================================================");
 			} else if (diag.getMessage(null).contains("non-static variable") && ogErrorStrings[index].contains("non-static variable")) {
-				setMessageArr("\nError #" + (numErrors + 1) + ":" + "\n===============================================================================\nStart Pos: "
-				+ diag.getStartPosition() + "\n-------------------------------------------------------------------------------\nEnd Pos: "
-				+ diag.getEndPosition() + "\n-------------------------------------------------------------------------------\nSource: "
-				+ diag.getSource().toString() + "\n-------------------------------------------------------------------------------\nOriginal Message: "
-				+ diag.getMessage(null) + "\n-------------------------------------------------------------------------------\nSuggestion: "
-				+ eErrorStrings[index] + "\n===============================================================================");
+				setMessageArr("\nError #" + (numErrors + 1) + ":" + "\n==============================================================================\nStart Pos: "
+				+ diag.getStartPosition() + "\n------------------------------------------------------------------------------\nEnd Pos: "
+				+ diag.getEndPosition() + "\n------------------------------------------------------------------------------\nSource: "
+				+ diag.getSource().toString() + "\n------------------------------------------------------------------------------\nOriginal Message: "
+				+ diag.getMessage(null) + "\n------------------------------------------------------------------------------\nSuggestion: "
+				+ eErrorStrings[index] + "\n==============================================================================");
 			} else if (diag.getMessage(null).contains("non-static method") && ogErrorStrings[index].contains("non-static method")) {
-				setMessageArr("\nError #" + (numErrors + 1) + ":" + "\n===============================================================================\nStart Pos: "
-				+ diag.getStartPosition() + "\n-------------------------------------------------------------------------------\nEnd Pos: "
-				+ diag.getEndPosition() + "\n-------------------------------------------------------------------------------\nSource: "
-				+ diag.getSource().toString() + "\n-------------------------------------------------------------------------------\nOriginal Message: "
-				+ diag.getMessage(null) + "\n-------------------------------------------------------------------------------\nSuggestion: "
-				+ eErrorStrings[index] + "\n===============================================================================");
+				setMessageArr("\nError #" + (numErrors + 1) + ":" + "\n==============================================================================\nStart Pos: "
+				+ diag.getStartPosition() + "\n------------------------------------------------------------------------------\nEnd Pos: "
+				+ diag.getEndPosition() + "\n------------------------------------------------------------------------------\nSource: "
+				+ diag.getSource().toString() + "\n------------------------------------------------------------------------------\nOriginal Message: "
+				+ diag.getMessage(null) + "\n------------------------------------------------------------------------------\nSuggestion: "
+				+ eErrorStrings[index] + "\n==============================================================================");
 			} else if (diag.getMessage(null).contains("should be declared in a file named") && ogErrorStrings[index].contains("should be declared in a file named")) {
-				setMessageArr("\nError #" + (numErrors + 1) + ":" + "\n===============================================================================\nStart Pos: "
-				+ diag.getStartPosition() + "\n-------------------------------------------------------------------------------\nEnd Pos: "
-				+ diag.getEndPosition() + "\n-------------------------------------------------------------------------------\nSource: "
-				+ diag.getSource().toString() + "\n-------------------------------------------------------------------------------\nOriginal Message: "
-				+ diag.getMessage(null) + "\n-------------------------------------------------------------------------------\nSuggestion: "
-				+ eErrorStrings[index] + "\n===============================================================================");
+				setMessageArr("\nError #" + (numErrors + 1) + ":" + "\n==============================================================================\nStart Pos: "
+				+ diag.getStartPosition() + "\n------------------------------------------------------------------------------\nEnd Pos: "
+				+ diag.getEndPosition() + "\n------------------------------------------------------------------------------\nSource: "
+				+ diag.getSource().toString() + "\n------------------------------------------------------------------------------\nOriginal Message: "
+				+ diag.getMessage(null) + "\n------------------------------------------------------------------------------\nSuggestion: "
+				+ eErrorStrings[index] + "\n==============================================================================");
 			} else if (diag.getMessage(null).contains("cannot be applied to given types") && ogErrorStrings[index].contains("cannot be applied to given types")) {
-				setMessageArr("\nError #" + (numErrors + 1) + ":" + "\n===============================================================================\nStart Pos: "
-				+ diag.getStartPosition() + "\n-------------------------------------------------------------------------------\nEnd Pos: "
-				+ diag.getEndPosition() + "\n-------------------------------------------------------------------------------\nSource: "
-				+ diag.getSource().toString() + "\n-------------------------------------------------------------------------------\nOriginal Message: "
-				+ diag.getMessage(null) + "\n-------------------------------------------------------------------------------\nSuggestion: "
-				+ eErrorStrings[index] + "\n===============================================================================");
+				setMessageArr("\nError #" + (numErrors + 1) + ":" + "\n==============================================================================\nStart Pos: "
+				+ diag.getStartPosition() + "\n------------------------------------------------------------------------------\nEnd Pos: "
+				+ diag.getEndPosition() + "\n------------------------------------------------------------------------------\nSource: "
+				+ diag.getSource().toString() + "\n------------------------------------------------------------------------------\nOriginal Message: "
+				+ diag.getMessage(null) + "\n------------------------------------------------------------------------------\nSuggestion: "
+				+ eErrorStrings[index] + "\n==============================================================================");
 			} else {
 				System.out.println("There was a problem with the error message data. Sorry!");
 				System.exit(0);
