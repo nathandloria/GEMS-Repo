@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
 
-import java.sql.*;
-
 import jgrader.parse.objects.CompileErrorParseObject;
+import jgrader.updatedb.updater;
 
 public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObject>, CompileErrorParseObject> {
 
@@ -16,14 +15,15 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 	private static int low;
 	private static int high;
 	private static int mid;
-	private static int i;
 	private CompileErrorParseObject message;
 	private static ArrayList<String> messageArrs;
 	private String[] eErrorStrings;
 	private String[] ogErrorStrings;
+	private updater upd;
 	private Dbdataparser data;
 
 	public CompileErrorParser() {
+		upd = new updater();
 		numErrors = 0;
 		messageArrs = new ArrayList<>();
 		data = new Dbdataparser();
@@ -67,9 +67,8 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 		message = new CompileErrorParseObject(diag.getMessage(null),
 		numErrors, diag.getCode(), diag.getKind().toString(),
 		diag.getStartPosition(), diag.getEndPosition(), diag.getSource().toString());
-
-		update(diag.getMessage(null));
-		index = setIndex(ogErrorStrings, diag.getMessage(null));
+		
+		index = searchBinary(ogErrorStrings, diag.getMessage(null));
 		
 		if (index == -1) {
 			return message;
@@ -115,12 +114,8 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 			}
 		}
 		numErrors++;
+		upd.update(diag.getMessage(null));
 		return message;
-	}
-
-	public static int setIndex(String[] ogerr, String comperr) {
-		i = searchBinary(ogerr, comperr);
-		return i;
 	}
 
 	public static void setMessageArr(String str) {
@@ -129,35 +124,5 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 
 	public ArrayList<String> getMessageArr() {
 		return messageArrs;
-	}
-	
-	public static void update(String str) {
-
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-			    Connection con = DriverManager.getConnection (
-			    		"jdbc:mysql://test-int-database.cxg9j6dtitgh.us-east-2.rds.amazonaws.com/innodb", "admin", "npj3sTTOgk3UhKuCSyof"
-			    );
-			    Statement stmt = con.createStatement();
-			    ResultSet rs;
-			    rs = stmt.executeQuery("SELECT * FROM eMessagesTable");
-			    boolean equal = false;
-			    rs = stmt.executeQuery("SELECT * FROM eMessagesTable");
-			    while (rs.next()) {
-			    	if (str.equals(rs.getString("emessages"))) {
-			    		equal = true;
-			    	}
-			    }
-			    
-				if (equal != true) {
-			    	stmt.executeUpdate("INSERT INTO eMessagesTable VALUES (\"" + str + "\")");
-			    }
-			    
-			    rs.close();
-			    stmt.close();
-			    con.close();
-				} catch (Exception e) {
-			      System.out.println(e);
-				}
 	}
 }
