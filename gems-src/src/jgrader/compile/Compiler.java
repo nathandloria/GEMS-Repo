@@ -1,30 +1,27 @@
 package jgrader.compile;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.tools.DiagnosticCollector;
-import javax.tools.JavaCompiler;
-import javax.tools.JavaCompiler.CompilationTask;
-import javax.tools.JavaFileObject;
-import javax.tools.ToolProvider;
-
 import jgrader.SystemInteractor;
+import java.nio.file.*;
+import java.io.IOException;
+import javax.tools.*;
+import javax.tools.JavaCompiler.CompilationTask;
+import java.util.List;
+import java.util.Collections;
+import java.util.stream.Stream;
+import java.util.stream.Collectors;
+import java.util.Arrays;
 import jgrader.parse.CompileErrorParser;
+import jgrader.parse.objects.CompileErrorParseObject;
+import java.util.StringJoiner;
 import jgrader.util.FileFinder;
 
 public class Compiler extends SystemInteractor {
 
-    ArrayList<String> errorMessages;
     List<String> classes;
     String projectDirectory;
     String reportDirectory;
-    int errorNum;
-	// main class is the first in the list
+
+    // main class is the first in the list
     public Compiler(String projectDirectory, List<String> classes, String reportDirectory) {
         this.classes = classes;
         this.projectDirectory = projectDirectory;
@@ -40,7 +37,7 @@ public class Compiler extends SystemInteractor {
         // Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromStrings(classes);
 
         List<JavaFileObject> compilationUnits = classes.stream().map(filename -> FileFinder.toRealPath(filename))
-                .map(filename -> new JavaSourceFile(filename.replace(" ", "%20"))).collect(Collectors.toList());
+                .map(filename -> new JavaSourceFile(filename)).collect(Collectors.toList());
 
         // classes = classes.stream().map(str -> Paths.get(str).toFile().getName().replaceAll(".java", ""))
         // .collect(Collectors.toList());
@@ -57,20 +54,24 @@ public class Compiler extends SystemInteractor {
         boolean success = task.call();
 
         CompileErrorParser parser = new CompileErrorParser();
-        diagnostics.getDiagnostics().stream().map(diag -> parser.parse(diag))
+        List<CompileErrorParseObject> parsed = diagnostics.getDiagnostics().stream().map(diag -> parser.parse(diag))
                 .collect(Collectors.toList());
 
-        errorNum = parser.getErrorNum();
-        errorMessages = parser.getMessageArr();
+        System.out.println(parser.complete());
+
+        if (!success)
+            report(parsed);
 
         return success ? SUCCESS : ERROR;
     }
 
-    public ArrayList<String> getArrayList() {
-      return errorMessages;
-    }
-
-    public int getErrorNumInt() {
-      return errorNum;
+    public void report(List<CompileErrorParseObject> errors) {
+        StringJoiner joiner = new StringJoiner("\n-----\n");
+        errors.forEach(error -> joiner.add(error.toString()));
+        try {
+            Files.write(Paths.get(reportDirectory + "/compile-errors.txt"), joiner.toString().getBytes());
+        } catch (IOException ex) {
+            System.err.println("Failed to write compile error report to " + reportDirectory + "/compile-errors.txt");
+        }
     }
 }
