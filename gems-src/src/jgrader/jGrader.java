@@ -1,36 +1,54 @@
 package jgrader;
 
 import jgrader.compile.Compiler;
-import jgrader.SystemInteractor;
-import jgrader.execute.Executor;
+import jgrader.parse.CompileErrorParser;
 import jgrader.util.FileFinder;
+import java.util.ArrayList;
 import java.util.Scanner;
-import java.nio.file.Paths;
-import java.io.IOException;
+import jgrader.updatedb.updater;
 
 public class jGrader {
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
+  public static void main(String[] args) {
+	  Scanner scan = new Scanner(System.in);
+	  CompileErrorParser parser = new CompileErrorParser();
+	  updater upd = new updater();
+	  String projectDirectory;
+	  String reportDirectory;
+	  Compiler compiler;
+      projectDirectory = System.getProperty("user.dir");
+      reportDirectory = System.getProperty("user.dir");
 
-        String projectDirectory, reportDirectory, userSpecPath;
-        System.out.println("Please enter the directory containing the files you would like to compile: ");
-        userSpecPath = scan.next();
+      compiler = new Compiler(projectDirectory,
+      FileFinder.convertToFileNames(FileFinder.find(projectDirectory, "**.java")), reportDirectory);
 
-        projectDirectory = userSpecPath;
-        reportDirectory = System.getProperty("user.dir");
-
-        // compile everything in projectDirectory/src, put it in projectDirectory/classes, and report on errors to the current working directory, in a file called compile-errors.txt
-        Compiler compiler = new Compiler(projectDirectory,
-                FileFinder.convertToFileNames(FileFinder.find(projectDirectory, "**.java")), reportDirectory);
-
-        int result = compiler.run();
-
-        if (result == SystemInteractor.SUCCESS) {
-            Executor executor = new Executor();
-
-            result = executor.run();
-
+      compiler.run();
+      
+      ArrayList<String> ogMessageArr = parser.getOmessageArr();
+      ArrayList<String> eMessageArr = parser.getEmessageArr();
+      
+      if (compiler.getErrorNumInt() == 0) {
+          System.out.println("SUCCESS! There were no errors found! Have a nice day!");
+          System.exit(0);
+        } else {
+          System.out.println("FAILED! There were " + compiler.getErrorNumInt() + " errors found!");
         }
-
+      
+      System.out.println("Would you like to view the original error messages or an enhanced version of these messages? (og/enh): ");
+      String choice = scan.nextLine();
+      
+      if (choice.equals("enh")) {
+    	for (int i = 0; i < eMessageArr.size(); i++) {
+    	  System.out.println(eMessageArr.get(i));
+      	}
+      } else if (choice.equals("og")) {
+    	  for (int i = 0; i < eMessageArr.size(); i++) {
+        	  System.out.println(ogMessageArr.get(i));
+          }
+      }
+      
+      for (int i = 0; i < ogMessageArr.size(); i++) {
+    	  upd.update(ogMessageArr.get(i));
+      }
+      scan.close();
     }
-}
+  }

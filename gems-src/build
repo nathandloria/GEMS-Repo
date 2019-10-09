@@ -13,5 +13,5 @@ done
 command rm -rf "$build_dir/classes"
 command mkdir "$build_dir/classes"
 command echo "$sources" > "$build_dir/sources.txt"
-command javac -d "$build_dir/classes" -cp "$build_dir/src/jgrader/jar/*" "@$build_dir/sources.txt"
+command javac -d "$build_dir/classes" -cp "$build_dir/src/jgrader/jar/*" "@$build_dir/sources.txt" -Xlint:deprecation
 command rm "$build_dir/sources.txt"

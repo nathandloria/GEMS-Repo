@@ -1,0 +1,23 @@
+';' expected
+')' expected
+'{' expected
+class, interface, or enum expected
+reached end of file while parsing
+unclosed string literal
+illegal start of expression
+cannot find symbol
+incompatible types
+invalid method declaration; return type required
+missing return statement
+possible loss of precision
+unreachable statement
+inconvertible types
+missing return value
+cannot return a value from method whose result type is void
+non-static variable --- cannot be referenced from a static context
+non-static method --- cannot be referenced from a static context
+class --- is public, should be declared in a file named ---.java
+<identifier> expected
+illegal start of type
+method --- in class --- cannot be applied to given types
+modifier --- not allowed here
