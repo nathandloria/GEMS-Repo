@@ -18,6 +18,7 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 	private CompileErrorParseObject message;
 	private static ArrayList<String> eMessageArrs;
 	private static ArrayList<String> oMessageArrs;
+	private static ArrayList<Long> lineNumArr;
 	private String[] eErrorStrings;
 	private String[] ogErrorStrings;
 	private Dbdataparser data;
@@ -28,6 +29,7 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 		new ArrayList<>();
 		eMessageArrs = new ArrayList<>();
 		oMessageArrs = new ArrayList<>();
+		lineNumArr = new ArrayList<>();
 		data = new Dbdataparser();
 		data.setStringArrays();
 		ogErrorStrings = data.getOgErrorArr();
@@ -70,6 +72,7 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 		numErrors, diag.getCode(), diag.getKind().toString(),
 		diag.getStartPosition(), diag.getEndPosition(), diag.getSource().toString());
 		
+		updateLineNumberArr(diag.getLineNumber());
 		updateOmessageArr(diag.getMessage(null));
 		index = searchBinary(ogErrorStrings, diag.getMessage(null));
 		
@@ -109,5 +112,13 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 	
 	public ArrayList<String> getOmessageArr() {
 		return oMessageArrs;
+	}
+	
+	public static void updateLineNumberArr(long linenum) {
+		lineNumArr.add(linenum);
+	}
+	
+	public ArrayList<Long> getLineNumberArr() {
+		return lineNumArr;
 	}
 }

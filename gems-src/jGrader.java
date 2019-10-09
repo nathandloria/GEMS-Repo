@@ -21,27 +21,32 @@ public class jGrader {
       compiler = new Compiler(projectDirectory,
       FileFinder.convertToFileNames(FileFinder.find(projectDirectory, "**.java")), reportDirectory);
 
+      System.out.println("Compiling Java Programs...");
+      
       compiler.run();
       
       ArrayList<String> ogMessageArr = parser.getOmessageArr();
       ArrayList<String> eMessageArr = parser.getEmessageArr();
+      ArrayList<Long> lineNums = parser.getLineNumberArr();
       
       if (compiler.getErrorNumInt() == 0) {
-          System.out.println("SUCCESS! There were no errors found! Have a nice day!");
+          System.out.println("\nSUCCESS! There were no errors found! Have a nice day!");
           System.exit(0);
         } else {
-          System.out.println("FAILED! There were " + compiler.getErrorNumInt() + " errors found!");
+          System.out.println("\nFAILED! There were " + compiler.getErrorNumInt() + " errors found!");
         }
       
-      System.out.println("Would you like to view the original error messages or an enhanced version of these messages? (og/enh): ");
+      System.out.println("\nWould you like to view the original error messages or an enhanced version of these messages? (og/enh): ");
       String choice = scan.nextLine();
       
       if (choice.equals("enh")) {
     	for (int i = 0; i < eMessageArr.size(); i++) {
+    		System.out.println("\nError #" + (i + 1) + " @ Line " + lineNums.get(i) + ": ");
     	  System.out.println(eMessageArr.get(i));
       	}
       } else if (choice.equals("og")) {
     	  for (int i = 0; i < eMessageArr.size(); i++) {
+    		  System.out.println("\nError #" + (i + 1) + " @ Line " + lineNums.get(i) + ": ");
         	  System.out.println(ogMessageArr.get(i));
           }
       }
