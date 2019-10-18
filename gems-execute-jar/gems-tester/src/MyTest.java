@@ -1,8 +1,7 @@
-public class MyText {
+public class MyTest {
+  ello = 10;
   public static void main(String[] args) {
-    System.out.println("whats up?);
-    System.out.println("nothing much, how about you?")
-    System.out.println("same";
-    "
+    System.out.println("hello")
+    System.out.println(hey")
   }
 }
