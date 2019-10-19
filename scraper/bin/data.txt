@@ -1,0 +1,66 @@
+Question:
+
+What's the issue here? class UserInput {
+  public void name() {
+    System.out.println("This is a test.");
+  }
+}
+
+public class MyClass {
+  UserInput input = new UserInput();
+  input.name();
+}
+ This complains: <identifier> expected
+   input.name();
++--------------------------------------------------------------------------------------------------------------+
+Answer #1:
+
+Put your code in a method. Try this: public class MyClass {
+    public static void main(String[] args) {
+        UserInput input = new UserInput();
+        input.name();
+    }
+}
+ Then "run" the class from your IDE
++--------------------------------------------------------------------------------------------------------------+
+Answer #2:
+
+You can't call methods outside a method. Code like this cannot float around in the class. You need something like: public class MyClass {
+
+  UserInput input = new UserInput();
+
+  public void foo() {
+      input.name();
+  }
+}
+ or inside a constructor: public class MyClass {
+
+  UserInput input = new UserInput();
+
+  public MyClass() {
+      input.name();
+  }
+}
++--------------------------------------------------------------------------------------------------------------+
+Answer #3:
+
+input.name() needs to be inside a function; classes contain declarations, not random code.
++--------------------------------------------------------------------------------------------------------------+
+Answer #4:
+
+Try it like this instead, move your myclass items inside a main method:     class UserInput {
+      public void name() {
+        System.out.println("This is a test.");
+      }
+    }
+
+    public class MyClass {
+
+        public static void main( String args[] )
+        {
+            UserInput input = new UserInput();
+            input.name();
+        }
+
+    }
++--------------------------------------------------------------------------------------------------------------+
