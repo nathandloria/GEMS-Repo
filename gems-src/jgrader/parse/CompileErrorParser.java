@@ -81,7 +81,7 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 		index = searchBinary(ogErrorStrings, diag.getMessage(null));
 		
 		if (index == -1) {
-			return message;
+			updateEmessageArr("Error Not Logged - Sorry!");
 		} else {
 			if (diag.getMessage(null).equals(ogErrorStrings[index])) {
 				updateEmessageArr(eErrorStrings[index]);

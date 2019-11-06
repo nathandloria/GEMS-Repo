@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import jgrader.updatedb.updater;
 import java.io.*;
+import jgrader.scraper.scraper;
 
 public class jGrader {
   public static void main(String[] args) {
@@ -19,10 +20,10 @@ public class jGrader {
       projectDirectory = System.getProperty("user.dir");
       reportDirectory = System.getProperty("user.dir");
       
+      System.out.println("Compiling Java Programs...");
+      
       compiler = new Compiler(projectDirectory,
       FileFinder.convertToFileNames(FileFinder.find(projectDirectory, "**.java")), reportDirectory);
-
-      System.out.println("Compiling Java Programs...");
       
       compiler.run();
       
@@ -47,11 +48,13 @@ public class jGrader {
           if (choice.equals("enh")) {
         	for (int i = 0; i < eMessageArr.size(); i++) {
         		System.out.println("\nError #" + (i + 1) + " @ Line " + lineNums.get(i) + " in file " + fileNames.get(i) + ": ");
+        		System.out.println("---");
         	  System.out.println(eMessageArr.get(i));
           	}
           } else if (choice.equals("og")) {
         	  for (int i = 0; i < eMessageArr.size(); i++) {
           		System.out.println("\nError #" + (i + 1) + " @ Line " + lineNums.get(i) + " in file " + fileNames.get(i) + ": ");
+          		System.out.println("---");
             	  System.out.println(ogMessageArr.get(i));
               }
           }
@@ -83,10 +86,18 @@ public class jGrader {
     	      System.out.println(e);
     	  }
     	  System.out.println("\nThe results have been printed to a text file called \"out.txt\" in your project directory!");
+    	  scraper scr = new scraper();
+    	  for (int i = 0; i < ogMessageArr.size(); i++) {
+    	      scr.writeToFile(scr.scrapeData(scr.getLinksArr(ogMessageArr.get(i))), ogMessageArr.get(i));
+    	      try {
+    	        Thread.sleep(2000);
+    	      } catch(Exception x) {
+    	        System.out.println(x);
+    	      }
+    	    }
       }
-      for (int i = 0; i < ogMessageArr.size(); i++) {
-    	  upd.update(ogMessageArr.get(i));
-      }
+      upd.update(ogMessageArr);
       scan.close();
+      System.exit(0);
     }
   }
