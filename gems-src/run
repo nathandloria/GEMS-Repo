@@ -1,0 +1,5 @@
+#!/bin/bash
+main="jgrader.jGrader"
+echo "Running $main"
+cd classes
+java -cp .:../src/jar/* $main "$@"

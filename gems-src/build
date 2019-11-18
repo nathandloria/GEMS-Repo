@@ -1,0 +1,13 @@
+#!/bin/bash
+#assume we're in the project dir
+project_dir=.
+#assume we don't have a specific build folder
+build_dir=$project_dir
+
+sources="$(find $project_dir/src/jgrader | grep .java)"
+
+for file in $sources; do
+    command echo "Compiling: $file";
+done
+
+command javac  -d "$build_dir/classes" -cp "$build_dir/src/jar/*" $sources -Xlint:deprecation
