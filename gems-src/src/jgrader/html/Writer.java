@@ -44,9 +44,15 @@ public class Writer {
 				  "</h4>" +
 				  "</div>" +
 				  "<div id=\"collapse" + i + "\" class=\"panel-collapse collapse\">");
-		  for (int j = 0; j < linkArr.size(); j++) {
-			  html.add("<div class=\"panel-body\"><a href=\"" + linkArr.get(j) + "\">" + linkArr.get(j) + "</a></div>");
-		  }
+      if (linkArr.size() <= 5) {
+        for (int j = 0; j < linkArr.size(); j++) {
+  			  html.add("<div class=\"panel-body\"><a href=\"" + linkArr.get(j) + "\">" + linkArr.get(j) + "</a></div>");
+  		  }
+      } else {
+        for (int j = 0; j < 5; j++) {
+          html.add("<div class=\"panel-body\"><a href=\"" + linkArr.get(j) + "\">" + linkArr.get(j) + "</a></div>");
+        }
+      }
 		  html.add("</div>" +
 				  "</div>" +
 				  "</div>" +
