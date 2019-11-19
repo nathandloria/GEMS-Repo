@@ -10,10 +10,10 @@ public class Dbdataparser {
   static int lport;
   static String rhost;
   static int rport;
-  
+
   public Dbdataparser() {
   }
-  
+
   static void go() {
     String user = "gems";
     String password = "gemsdb";
@@ -32,7 +32,7 @@ public class Dbdataparser {
     }
     catch(Exception e) {}
   }
-  
+
   public void setStringArrays() {
     try {
       go();
@@ -70,11 +70,11 @@ public class Dbdataparser {
       System.out.println(e);
     }
   }
-  
+
   public String[] getOgErrorArr() {
     return ogerrors;
   }
-  
+
   public String[] getEnhErrorArr() {
     return eerrors;
   }

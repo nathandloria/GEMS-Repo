@@ -74,12 +74,8 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 		String temp = "[file:///" + System.getProperty("user.dir") + "/";
 		updateFileArr(diag.getSource().toString().substring(diag.getSource().toString().indexOf(temp) + temp.length(), diag.getSource().toString().length() - 1));
 
-		message = new CompileErrorParseObject(diag.getMessage(null),
-		numErrors, diag.getCode(), diag.getKind().toString(),
-		diag.getStartPosition(), diag.getEndPosition(), diag.getSource().toString());
-		
 		index = searchBinary(ogErrorStrings, diag.getMessage(null));
-		
+
 		if (index == -1) {
 			updateEmessageArr("Error Not Logged - Sorry!");
 		} else {
@@ -101,35 +97,35 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 		numErrors++;
 		return message;
 	}
-	
+
 	public static void updateEmessageArr(String str) {
 		eMessageArrs.add(str);
 	}
-	
+
 	public static void updateOmessageArr(String str) {
 		oMessageArrs.add(str);
 	}
-	
+
 	public ArrayList<String> getEmessageArr() {
 		return eMessageArrs;
 	}
-	
+
 	public ArrayList<String> getOmessageArr() {
 		return oMessageArrs;
 	}
-	
+
 	public static void updateLineNumberArr(long linenum) {
 		lineNumArr.add(linenum);
 	}
-	
+
 	public ArrayList<Long> getLineNumberArr() {
 		return lineNumArr;
 	}
-	
+
 	public static void updateFileArr(String str) {
 		fileArr.add(str);
 	}
-	
+
 	public ArrayList<String> getFileArr() {
 		return fileArr;
 	}

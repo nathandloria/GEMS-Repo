@@ -17,10 +17,10 @@ public class updater {
   int lport = 4321;
   String rhost = "localhost";
   static int rport = 3306;
-  
+
   public updater() {
   }
-  
+
   public void update(ArrayList<String> emessages) {
     Connection conn = null;
     try {
@@ -36,10 +36,10 @@ public class updater {
       conn = DriverManager.getConnection(url, dbUser, dbPasswd);
       Statement stat = conn.createStatement();
       ResultSet rest = null;
-      
+
       for(int d = 0; d < emessages.size(); d++) {
-    	int count = 0;
-    	rest = stat.executeQuery("SELECT * FROM eMessagesTable");
+        int count = 0;
+        rest = stat.executeQuery("SELECT * FROM eMessagesTable");
         while (rest.next()) {
           count++;
         }
@@ -47,21 +47,21 @@ public class updater {
         errorMessages = new String[count];
         rest = stat.executeQuery("SELECT * FROM eMessagesTable");
         while (rest.next()) {
-        	errorMessages[i] = rest.getString("emessages");
-        	i++;
+          errorMessages[i] = rest.getString("emessages");
+          i++;
         }
         Arrays.sort(errorMessages);
         index = searchBinary(errorMessages, emessages.get(d));
-        
+
         if (index == -1) {
-          
+
           try (PreparedStatement pstmt = conn.prepareStatement("INSERT INTO eMessagesTable VALUES(?)")) {
             pstmt.setString(1, emessages.get(d));
             pstmt.executeUpdate();
           } catch(Exception ex) {
             System.out.println(ex);
           }
-          
+
           // stmt.executeUpdate("INSERT INTO eMessagesTable VALUES (\"" + emessage + "\")");
         } else {
           boolean cont = false;
@@ -73,14 +73,14 @@ public class updater {
             }
           }
           if (cont == false) {
-            
+
             try (PreparedStatement pstmt = conn.prepareStatement("INSERT INTO eMessagesTable VALUES(?)")) {
               pstmt.setString(1, emessages.get(d));
               pstmt.executeUpdate();
             } catch(Exception ex) {
               System.out.println(ex);
             }
-            
+
             // stmt.executeUpdate("INSERT INTO eMessagesTable VALUES (\"" + emessage + "\")");
           }
         }
@@ -92,14 +92,14 @@ public class updater {
       System.out.println(e);
     }
   }
-  
+
   public static int searchBinary(String[] array, String str) {
     low = 0;
     high = array.length - 1;
-    
+
     while (low <= high) {
       mid = (low + high) / 2;
-      
+
       if (array[mid].compareTo(str) < 0) {
         low = mid + 1;
       } else if (array[mid].compareTo(str) > 0) {
