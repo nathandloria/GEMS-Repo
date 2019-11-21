@@ -8,6 +8,7 @@ import java.util.Scanner;
 import jgrader.updatedb.updater;
 import java.io.*;
 import jgrader.writer.Writer;
+import java.awt.Desktop;
 
 public class jGrader {
   public static void main(String[] args) {
@@ -41,10 +42,10 @@ public class jGrader {
 
     System.out.println("\nWould you like to view the results in the terminal window or in a generated text file? (term/file): ");
     String choiceterm = scan.next();
+    upd.update(ogMessageArr);
     if (choiceterm.equals("term")) {
       System.out.println("\nWould you like to view the original error messages or an enhanced version of these messages? (og/enh): ");
       String choice = scan.next();
-
       if (choice.equals("enh")) {
         for (int i = 0; i < eMessageArr.size(); i++) {
           System.out.println("\nError #" + (i + 1) + " @ Line " + lineNums.get(i) + " in file " + fileNames.get(i) + ": ");
@@ -63,8 +64,14 @@ public class jGrader {
       Writer wtr = new Writer();
       wtr.formatHtml(eMessageArr, ogMessageArr, fileNames, lineNums);
       System.out.println("\nDone! a new file named 'report.html' has been created!");
+      try {
+        Desktop desktop = Desktop.getDesktop();
+        File file = new File(reportDirectory + "/report.html");
+        if(file.exists()) {
+          desktop.open(file);
+        }
+      } catch (Exception x) {}
     }
-    upd.update(ogMessageArr);
     scan.close();
     System.exit(0);
   }
