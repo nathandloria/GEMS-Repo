@@ -44,13 +44,15 @@ public class Writer {
 				  "</h4>" +
 				  "</div>" +
 				  "<div id=\"collapse" + i + "\" class=\"panel-collapse collapse\">");
-      if (linkArr.size() <= 5) {
+      if (linkArr.size() == 0) {
+        html.add("<div class=\"panel-body\">No links found for this error. Sorry!</div>");
+      } else if (linkArr.size() <= 5) {
         for (int j = 0; j < linkArr.size(); j++) {
-  			  html.add("<div class=\"panel-body\"><a href=\"" + linkArr.get(j) + "\">" + linkArr.get(j) + "</a></div>");
+  			  html.add("<div class=\"panel-body\"><a href=\"" + linkArr.get(j) + "\" target=\"_blank\" rel=\"noreferrer\">" + linkArr.get(j) + "</a></div>");
   		  }
       } else {
         for (int j = 0; j < 5; j++) {
-          html.add("<div class=\"panel-body\"><a href=\"" + linkArr.get(j) + "\">" + linkArr.get(j) + "</a></div>");
+          html.add("<div class=\"panel-body\"><a href=\"" + linkArr.get(j) + "\" target=\"_blank\" rel=\"noreferrer\">" + linkArr.get(j) + "</a></div>");
         }
       }
 		  html.add("</div>" +

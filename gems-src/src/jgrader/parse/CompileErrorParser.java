@@ -57,6 +57,18 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 		while (low <= high) {
 			mid = (low + high) / 2;
 
+			if (array[mid].contains("cannot find symbol") && str.contains("cannot find symbol")) {
+				return mid;
+			} else if (array[mid].contains("non-static variable") && str.contains("non-static variable")) {
+				return mid;
+			} else if (array[mid].contains("non-static method") && str.contains("non-static method")) {
+				return mid;
+			} else if (array[mid].contains("should be declared in a file named") && str.contains("should be declared in a file named")) {
+				return mid;
+			} else if (array[mid].contains("cannot be applied to given types") && str.contains("cannot be applied to given types")) {
+				return mid;
+			}
+
 			if (array[mid].compareTo(str) < 0) {
 				low = mid + 1;
 			} else if (array[mid].compareTo(str) > 0) {
@@ -80,6 +92,8 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 			updateEmessageArr("Error Not Logged - Sorry!");
 		} else {
 			if (diag.getMessage(null).equals(ogErrorStrings[index])) {
+				updateEmessageArr(eErrorStrings[index]);
+			} else if (diag.getMessage(null).contains("cannot find symbol") && ogErrorStrings[index].contains("cannot find symbol")) {
 				updateEmessageArr(eErrorStrings[index]);
 			} else if (diag.getMessage(null).contains("non-static variable") && ogErrorStrings[index].contains("non-static variable")) {
 				updateEmessageArr(eErrorStrings[index]);
