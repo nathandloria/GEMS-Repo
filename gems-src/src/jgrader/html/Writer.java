@@ -1,11 +1,10 @@
-package jgrader.writer;
+package jgrader.html;
 
 import jgrader.scraper.scraper;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Writer {
   public void formatHtml(ArrayList<String> enhErrList, ArrayList<String> ogErrList,

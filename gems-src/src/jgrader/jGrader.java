@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import jgrader.updatedb.updater;
 import java.io.*;
-import jgrader.writer.Writer;
+import jgrader.html.Writer;
 import java.awt.Desktop;
 
 public class jGrader {
