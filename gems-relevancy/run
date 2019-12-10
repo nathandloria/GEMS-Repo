@@ -1,0 +1,5 @@
+#!/bin/bash
+main="relchecker.Main"
+echo "Running $main"
+cd classes
+java -cp .:../src/jar/* $main "$@"
