@@ -40,6 +40,7 @@ public class Main {
     }
 
     for(int i = 0; i < ogMessageArr.size(); i++) {
+      System.out.println(ogMessageArr.get(i));
       solver.resolve(ogMessageArr.get(i), fileNames.get(i), projectDirectory, lineNums.get(i));
     }
 

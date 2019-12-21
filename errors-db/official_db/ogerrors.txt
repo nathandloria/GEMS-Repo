@@ -6,7 +6,7 @@ reached end of file while parsing
 unclosed string literal
 illegal start of expression
 cannot find symbol
-incompatible types: missing return value
+incompatible types: possible lossy conversion from double to int
 invalid method declaration; return type required
 missing return statement
 possible loss of precision
