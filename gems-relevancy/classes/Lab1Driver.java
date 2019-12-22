@@ -6,20 +6,20 @@ class Lab1{
 				temp = grades[i];
 			}
 		}
-		return temp;
+		return;
 	}
 
 	public int findMax(int[] grades, int size) {
 		int temp = 0;
 		for (int i = 0; i < size; i++) {
 			if (temp < grades[i]) {
-				temp = grades[i];
+				temp = grades[i]
 			}
 		}
 		return temp;
 	}
 
-	public double findAvg(int[] grade, int size) {
+	public double findAvg(int[] grades, int size) {
 		int res = 0.0;
 		int temp = 0;
 		for (int i = 0; i < size; i++) {
@@ -39,7 +39,7 @@ public class Lab1Driver {
 		int max = obj.findMax(grades, size);
 		double avg = obj.findAvg(grades);
 		System.out.println("Min: " + min);
-		System.out.println("Max: " + max);
+		System.out.println("Max: " + gmax);
 		System.out.println("Avg: " + avg);
 	}
 }
