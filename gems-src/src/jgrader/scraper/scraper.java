@@ -17,25 +17,16 @@ public class scraper {
   public ArrayList<String> getLinksArr(String message) {
     ArrayList<String> links = new ArrayList<>();
     String messageEncoded;
-    if (message.contains("cannot find symbol")) {
-      messageEncoded = encode("cannot find symbol");
-    } else if (message.contains("non-static variable")) {
-      messageEncoded = encode("non-static variable");
-    } else if (message.contains("non-static method")) {
-      messageEncoded = encode("non-static method");
-    } else if (message.contains("should be declared in a file named")) {
-      messageEncoded = encode("should be declared in a file named");
-    } else if (message.contains("cannot be applied to given types")) {
-      messageEncoded = encode("cannot be applied to given types");
-    } else {
-      messageEncoded = encode(message);
+    if (message.contains("(.*)")) {
+      message = message.replaceAll("(.*)", "");
     }
+    messageEncoded = encode(message);
 
     try {
       Document doc = Jsoup.connect("https://stackoverflow.com/search?q=" + messageEncoded + "+Java+error").get();
       Elements resultLinks = doc.select(("a[class=question-hyperlink]"));
       for (Element link : resultLinks) {
-        if(link.attr("title").contains(message)) {
+        if (link.attr("title").contains(message)) {
           links.add("https://stackoverflow.com" + link.attr("href"));
         }
       }

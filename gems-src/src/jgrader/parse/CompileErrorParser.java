@@ -22,6 +22,7 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 	private static ArrayList<String> oMessageArrs;
 	private static ArrayList<Long> lineNumArr;
 	private static ArrayList<String> fileArr;
+	private static ArrayList<String> compArr;
 	private String[] eErrorStrings;
 	private String[] ogErrorStrings;
 	private Dbdataparser data;
@@ -34,6 +35,7 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 		oMessageArrs = new ArrayList<>();
 		lineNumArr = new ArrayList<>();
 		fileArr = new ArrayList<>();
+		compArr = new ArrayList<>();
 		data = new Dbdataparser();
 		data.setStringArrays();
 		ogErrorStrings = data.getOgErrorArr();
@@ -87,6 +89,7 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 		if (index == -1) {
 			updateEmessageArr("Error Not Logged - Sorry!");
 		} else {
+			updateCompMessageArr(ogErrorStrings[index]);
 			if (ogErrorStrings[index].contains("(.*)")) {
 				Pattern pat = Pattern.compile(ogErrorStrings[index]);
 				if (pat.matcher(diag.getMessage(null)).matches()) {
@@ -133,5 +136,13 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 
 	public ArrayList<String> getFileArr() {
 		return fileArr;
+	}
+
+	public static void updateCompMessageArr(String str) {
+		compArr.add(str);
+	}
+
+	public ArrayList<String> getCompMessageArr() {
+		return compArr;
 	}
 }

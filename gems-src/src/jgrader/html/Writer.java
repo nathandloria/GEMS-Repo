@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Writer {
   public void formatHtml(ArrayList<String> enhErrList, ArrayList<String> ogErrList,
-  ArrayList<String> fileNameList, ArrayList<Long> lineNumList) {
+  ArrayList<String> fileNameList, ArrayList<Long> lineNumList, ArrayList<String> compErrorList) {
     scraper scrap = new scraper();
 	  ArrayList<String> linkArr = new ArrayList<String>();
 	  ArrayList<String> html = new ArrayList<String>();
@@ -18,7 +18,7 @@ public class Writer {
 		  		  "<p class=\"mb-0\">The GEMS tool has parsed your source files and discovered " + ogErrList.size() + " errors! Scroll down for more information!</p>" +
 		  		  "</div>");
 	  for (int i = 0; i < ogErrList.size(); i++) {
-      linkArr = scrap.getLinksArr(ogErrList.get(i));
+      linkArr = scrap.getLinksArr(compErrorList.get(i));
 		  html.add("<div class=\"jumbotron\">" +
 				  "<h1 class=\"display-4\"><b>" + "Error #" + (i + 1) + ":</b> </h1>");
           if (ogErrList.get(i).contains("<")) {

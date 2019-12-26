@@ -32,6 +32,7 @@ public class jGrader {
     ArrayList<String> eMessageArr = parser.getEmessageArr();
     ArrayList<Long> lineNums = parser.getLineNumberArr();
     ArrayList<String> fileNames = parser.getFileArr();
+    ArrayList<String> compArr = parser.getCompMessageArr();
 
     if (compiler.getErrorNumInt() == 0) {
       System.out.println("\nSUCCESS! There were no errors found! Have a nice day!");
@@ -62,7 +63,7 @@ public class jGrader {
     } else if (choiceterm.equals("file")) {
       System.out.println("\nOk, a new file will be created in your project directory. One moment please...");
       Writer wtr = new Writer();
-      wtr.formatHtml(eMessageArr, ogMessageArr, fileNames, lineNums);
+      wtr.formatHtml(eMessageArr, ogMessageArr, fileNames, lineNums, compArr);
       System.out.println("\nDone! a new file named 'report.html' has been created!");
       try {
         Desktop desktop = Desktop.getDesktop();
