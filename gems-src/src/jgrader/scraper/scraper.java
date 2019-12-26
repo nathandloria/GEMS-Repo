@@ -16,11 +16,13 @@ import org.jsoup.select.Elements;
 public class scraper {
   public ArrayList<String> getLinksArr(String message) {
     ArrayList<String> links = new ArrayList<>();
-    String messageEncoded;
     if (message.contains("(.*)")) {
-      message = message.replaceAll("(.*)", "");
+      message = message.replace("(.*)", "");
+      if (message.contains("  ")) {
+        message = message.replace("  ", " ");
+      }
     }
-    messageEncoded = encode(message);
+    String messageEncoded = encode(message);
 
     try {
       Document doc = Jsoup.connect("https://stackoverflow.com/search?q=" + messageEncoded + "+Java+error").get();
