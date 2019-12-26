@@ -1,6 +1,8 @@
 package jgrader.parse;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
@@ -57,18 +59,12 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 		while (low <= high) {
 			mid = (low + high) / 2;
 
-			if (array[mid].contains("cannot find symbol") && str.contains("cannot find symbol")) {
-				return mid;
-			} else if (array[mid].contains("non-static variable") && str.contains("non-static variable")) {
-				return mid;
-			} else if (array[mid].contains("non-static method") && str.contains("non-static method")) {
-				return mid;
-			} else if (array[mid].contains("should be declared in a file named") && str.contains("should be declared in a file named")) {
-				return mid;
-			} else if (array[mid].contains("cannot be applied to given types") && str.contains("cannot be applied to given types")) {
-				return mid;
+			if (array[mid].contains("(.*)")) {
+				Pattern p = Pattern.compile(array[mid]);
+				if (p.matcher(str).matches()) {
+					return mid;
+				}
 			}
-
 			if (array[mid].compareTo(str) < 0) {
 				low = mid + 1;
 			} else if (array[mid].compareTo(str) > 0) {
@@ -91,18 +87,13 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 		if (index == -1) {
 			updateEmessageArr("Error Not Logged - Sorry!");
 		} else {
-			if (diag.getMessage(null).equals(ogErrorStrings[index])) {
-				updateEmessageArr(eErrorStrings[index]);
-			} else if (diag.getMessage(null).contains("cannot find symbol") && ogErrorStrings[index].contains("cannot find symbol")) {
-				updateEmessageArr(eErrorStrings[index]);
-			} else if (diag.getMessage(null).contains("non-static variable") && ogErrorStrings[index].contains("non-static variable")) {
-				updateEmessageArr(eErrorStrings[index]);
-			} else if (diag.getMessage(null).contains("non-static method") && ogErrorStrings[index].contains("non-static method")) {
-				updateEmessageArr(eErrorStrings[index]);
-			} else if (diag.getMessage(null).contains("should be declared in a file named") && ogErrorStrings[index].contains("should be declared in a file named")) {
-				updateEmessageArr(eErrorStrings[index]);
-			} else if (diag.getMessage(null).contains("cannot be applied to given types") && ogErrorStrings[index].contains("cannot be applied to given types")) {
-				updateEmessageArr(eErrorStrings[index]);
+			if (ogErrorStrings[index].contains("(.*)")) {
+				Pattern pat = Pattern.compile(ogErrorStrings[index]);
+				if (pat.matcher(diag.getMessage(null)).matches()) {
+					updateEmessageArr(eErrorStrings[index]);
+				}
+			} else if (diag.getMessage(null).equals(ogErrorStrings[index])) {
+					updateEmessageArr(eErrorStrings[index]);
 			} else {
 				System.out.println("There was a problem with the error message data. Sorry!");
 				System.exit(0);

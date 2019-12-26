@@ -4,19 +4,19 @@
 <identifier> expected
 cannot find symbol
 cannot return a value from method whose result type is void
-class --- is public, should be declared in a file named ---.java
+class (.*) is public, should be declared in a file named (.*).java
 class, interface, or enum expected
 illegal start of expression
 illegal start of type
-incompatible types
+incompatible types: possible lossy conversion from double to int
 inconvertible types
 invalid method declaration; return type required
-method --- in class --- cannot be applied to given types
+method (.*) in class (.*) cannot be applied to given types
 missing return statement
 missing return value
-modifier --- not allowed here
-non-static method --- cannot be referenced from a static context
-non-static variable --- cannot be referenced from a static context
+modifier (.*) not allowed here
+non-static method (.*) cannot be referenced from a static context
+non-static variable (.*) cannot be referenced from a static context
 possible loss of precision
 reached end of file while parsing
 unclosed string literal

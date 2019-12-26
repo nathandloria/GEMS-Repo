@@ -14,10 +14,10 @@ unreachable statement
 inconvertible types
 missing return value
 cannot return a value from method whose result type is void
-non-static variable --- cannot be referenced from a static context
-non-static method --- cannot be referenced from a static context
-class --- is public, should be declared in a file named ---.java
+non-static variable (.*) cannot be referenced from a static context
+non-static method (.*) cannot be referenced from a static context
+class (.*) is public, should be declared in a file named (.*).java
 <identifier> expected
 illegal start of type
-method --- in class --- cannot be applied to given types
-modifier --- not allowed here
+method (.*) in class (.*) cannot be applied to given types
+modifier (.*) not allowed here
