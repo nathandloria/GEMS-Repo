@@ -25,11 +25,15 @@ public class scraper {
     String messageEncoded = encode(message);
 
     try {
-      System.out.println("https://stackoverflow.com/search?q=Java+error%3A+" + messageEncoded);
       Document doc = Jsoup.connect("https://stackoverflow.com/search?q=Java+error%3A+" + messageEncoded).get();
       Elements resultLinks = doc.select(("a[class=question-hyperlink]"));
       for (Element link : resultLinks) {
         if (link.attr("title").contains(message)) {
+          links.add("https://stackoverflow.com" + link.attr("href"));
+        }
+      }
+      if (links.size() == 0) {
+        for (Element link : resultLinks) {
           links.add("https://stackoverflow.com" + link.attr("href"));
         }
       }

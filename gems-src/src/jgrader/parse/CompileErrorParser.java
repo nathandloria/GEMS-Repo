@@ -88,15 +88,19 @@ public class CompileErrorParser extends Parser<Diagnostic<? extends JavaFileObje
 
 		if (index == -1) {
 			updateEmessageArr("Error Not Logged - Sorry!");
+			updateCompMessageArr("");
 		} else {
-			updateCompMessageArr(ogErrorStrings[index]);
 			if (ogErrorStrings[index].contains("(.*)")) {
 				Pattern pat = Pattern.compile(ogErrorStrings[index]);
 				if (pat.matcher(diag.getMessage(null)).matches()) {
 					updateEmessageArr(eErrorStrings[index]);
+					updateCompMessageArr(ogErrorStrings[index]);
+				} else {
+					updateCompMessageArr("");
 				}
 			} else if (diag.getMessage(null).equals(ogErrorStrings[index])) {
 					updateEmessageArr(eErrorStrings[index]);
+					updateCompMessageArr(ogErrorStrings[index]);
 			} else {
 				System.out.println("There was a problem with the error message data. Sorry!");
 				System.exit(0);
